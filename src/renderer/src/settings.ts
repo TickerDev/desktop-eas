@@ -462,7 +462,9 @@ export function playAlertSound(volume?: number, onEnded?: () => void): void {
   if (vol === 0) return
 
   if (!alertAudio) {
-    alertAudio = new Audio('/alert.mp3')
+    // Use a path relative to the loaded HTML file so it resolves
+    // inside the packaged app instead of the root of the drive.
+    alertAudio = new Audio('alert.mp3')
   }
 
   alertAudio.onended = onEnded ?? null

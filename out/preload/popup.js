@@ -1,5 +1,6 @@
 "use strict";
 const electron = require("electron");
+const path = require("path");
 electron.contextBridge.exposeInMainWorld("popupAPI", {
   getData: () => electron.ipcRenderer.invoke("popup:get-data"),
   dismiss: () => electron.ipcRenderer.send("popup:dismiss"),
@@ -8,5 +9,10 @@ electron.contextBridge.exposeInMainWorld("popupAPI", {
   showCaption: () => electron.ipcRenderer.invoke("caption:show"),
   sendCaptionText: (text) => electron.ipcRenderer.send("caption:text", text),
   clearCaption: () => electron.ipcRenderer.send("caption:clear"),
-  closeCaption: () => electron.ipcRenderer.send("caption:close")
+  closeCaption: () => electron.ipcRenderer.send("caption:close"),
+  getAlertSoundUrl: () => {
+    const fullPath = path.join(process.resourcesPath, "resources", "alert.mp3");
+    const normalized = fullPath.replace(/\\/g, "/");
+    return `file://${normalized}`;
+  }
 });

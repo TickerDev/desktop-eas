@@ -21,6 +21,7 @@ declare global {
       sendCaptionText: (text: string) => void
       clearCaption: () => void
       closeCaption: () => void
+      getAlertSoundUrl: () => string
     }
   }
 }
@@ -239,7 +240,8 @@ async function initMap(areas: AlertArea[], color: string): Promise<void> {
 function playAlertSound(volume: number): Promise<void> {
   return new Promise((resolve) => {
     if (volume <= 0) { resolve(); return }
-    const audio = new Audio(new URL('../public/alert.mp3', import.meta.url).href)
+    const url = window.popupAPI.getAlertSoundUrl()
+    const audio = new Audio(url)
     audio.volume = volume / 100
     audio.onended = () => resolve()
     audio.onerror = () => resolve()

@@ -29,6 +29,9 @@
       "out/**",
       "package.json"
     ],
+    "extraResources": [
+      "resources/**"
+    ],
     "win": {
       "target": "nsis"
     }
